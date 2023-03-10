@@ -9,6 +9,7 @@ export default function Home() {
     <main className={styles.main}>
       RSC File explorer
       <React.Suspense>
+        {/*@ts-expect-error*/}
         <Explorer />
       </React.Suspense>
     </main>
