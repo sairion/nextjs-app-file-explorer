@@ -3,16 +3,17 @@ import path from "path"
 import React from "react"
 import { partition } from "lodash-es"
 
-export default async function Explorer() {
-  try {
-    const result = await fs.readdir(path.resolve("."), { withFileTypes: true })
-    const [dirs, files] = partition(
-      result
-        .filter((dirEnt) => dirEnt.isDirectory() || dirEnt.isFile())
-        .sort((dirEntA, dirEntB) => (dirEntA.name > dirEntB.name ? 1 : -1)),
+const getDirEnts = async (userPath = ".") =>
+  fs.readdir(path.resolve(userPath), { withFileTypes: true }).then((dirEnts) => {
+    return partition(
+      dirEnts.filter((ent) => ent.isDirectory() || ent.isFile()).sort((entA, entB) => (entA.name > entB.name ? 1 : -1)),
       (e) => e.isDirectory()
     )
+  })
 
+export default async function Explorer() {
+  try {
+    const [dirs, files] = await getDirEnts()
     return (
       <div className="border-solid border-gray-300 border-[1px]">
         {dirs.map((ent) => (
