@@ -4,13 +4,13 @@ import styles from "./page.module.css"
 
 export const dynamic = "force-dynamic"
 
-export default function Home() {
+export default function Home({ searchParams }: { searchParams?: { [key: string]: string | string[] | undefined } }) {
   return (
     <main className={styles.main}>
       RSC File explorer
-      <React.Suspense>
-        {/*@ts-expect-error*/}
-        <Explorer />
+      <React.Suspense fallback="reading dir...">
+        {/*@ts-ignore*/}
+        <Explorer userPath={searchParams?.path ?? "."} />
       </React.Suspense>
     </main>
   )
