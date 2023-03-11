@@ -1,5 +1,4 @@
 import fs from "fs/promises"
-import fs2 from "fs"
 import path from "path"
 import * as React from "react"
 import { partition } from "lodash-es"
