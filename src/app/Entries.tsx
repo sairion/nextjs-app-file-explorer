@@ -18,7 +18,12 @@ export async function Entries({ userPath }: { userPath: string }) {
   try {
     const [dirs, files] = await getDirEnts(userPath)
     return (
-      <EntriesViewClient userPath={userPath} dirs={dirs.map((ent) => ent.name)} files={files.map((ent) => ent.name)} />
+      <EntriesViewClient
+        upperPath={path.resolve(userPath, "..")}
+        userPath={userPath}
+        dirs={dirs.map((ent) => [path.resolve(userPath, ent.name), ent.name])}
+        files={files.map((ent) => [path.resolve(userPath, ent.name), ent.name])}
+      />
     )
   } catch (e) {
     if (isNodeError(e)) {
